@@ -1,0 +1,9 @@
+'use strict'
+const merge = require('webpack-merge')
+const prodEnv = require('./prod.env')
+
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"',
+  OPEN_PROXY: false, // 是否开启代理, 重置后需重启vue-cli
+  lintOnSave:false  // 修改成false 就是不检查了
+})
