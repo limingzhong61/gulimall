@@ -1,19 +1,32 @@
 package com.codeofli.gulimall.product;
 
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.OSSClientBuilder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.codeofli.gulimall.product.entity.BrandEntity;
 import com.codeofli.gulimall.product.service.BrandService;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 @SpringBootTest
+@RunWith(SpringRunner.class)
 class GulimallProductApplicationTests {
 
     @Autowired
     BrandService brandService;
+
+
+
+
 
     @Test
     void contextLoads() {
@@ -27,7 +40,6 @@ class GulimallProductApplicationTests {
             System.out.println(item);
         });
     }
-
 
 
 }

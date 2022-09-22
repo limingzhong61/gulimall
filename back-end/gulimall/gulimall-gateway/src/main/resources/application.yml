@@ -17,6 +17,12 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
           #该路由规则应该放在product_route之后，应该/api/**拦截的更多
+        - id: third_party_route
+          uri: lb://gulimall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>/?.*),/$\{segment}
         - id: admin_route
           uri: lb://renren-fast   #路由给renren-fast，lb代表负载均衡
           predicates: #断言， 什么情况下路由给它
