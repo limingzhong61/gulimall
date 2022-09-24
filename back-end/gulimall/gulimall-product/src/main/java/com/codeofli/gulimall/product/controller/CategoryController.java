@@ -76,9 +76,9 @@ public class CategoryController {
      * 修改
      */
     @RequestMapping("/update")
-        public R update(@RequestBody CategoryEntity category){
-		categoryService.updateById(category);
-
+    //@RequiresPermissions("product:category:update")
+    public R update(@RequestBody CategoryEntity category){
+        categoryService.updateCascade(category);
         return R.ok();
     }
 

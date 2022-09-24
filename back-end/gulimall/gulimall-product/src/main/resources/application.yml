@@ -10,6 +10,9 @@ spring:
         server-addr: 127.0.0.1:8848
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  main:
+    #允许循环依赖
+    allow-circular-references: true
 
 
 mybatis-plus:

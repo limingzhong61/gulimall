@@ -1,15 +1,15 @@
 package com.codeofli.gulimall.product.dao;
 
-import com.codeofli.gulimall.product.entity.BrandEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.codeofli.gulimall.product.entity.BrandEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 品牌
  * 
- * @author codeofli
- * @email 1162314270@qq.com
- * @date 2022-05-15 18:40:03
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-01 21:08:49
  */
 @Mapper
 public interface BrandDao extends BaseMapper<BrandEntity> {
