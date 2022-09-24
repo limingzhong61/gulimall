@@ -62,7 +62,9 @@ public class CategoryEntity implements Serializable {
 	 * 商品数量
 	 */
 	private Integer productCount;
-
+	/**
+	 * 表示当只有该字段不为空时才会返回该属性
+	 */
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	@TableField(exist=false)
 	private List<CategoryEntity> children;
