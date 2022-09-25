@@ -23,6 +23,12 @@ spring:
             - Path=/api/thirdparty/**
           filters:
             - RewritePath=/api/thirdparty/(?<segment>/?.*),/$\{segment}
+        - id: gulimall-member
+          uri: lb://gulimall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
         - id: admin_route
           uri: lb://renren-fast   #路由给renren-fast，lb代表负载均衡
           predicates: #断言， 什么情况下路由给它

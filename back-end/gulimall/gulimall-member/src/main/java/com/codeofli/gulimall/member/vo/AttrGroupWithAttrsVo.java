@@ -1,6 +1,5 @@
 package com.codeofli.gulimall.member.vo;
 
-import com.atguigu.gulimall.product.entity.AttrEntity;
 import lombok.Data;
 
 import java.util.List;
@@ -33,5 +32,5 @@ public class AttrGroupWithAttrsVo {
      */
     private Long catelogId;
 
-    private List<AttrEntity> attrs;
+    //private List<AttrEntity> attrs;
 }
