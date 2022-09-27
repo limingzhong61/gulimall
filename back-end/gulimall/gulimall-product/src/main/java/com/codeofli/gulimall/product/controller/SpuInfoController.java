@@ -52,15 +52,15 @@ public class SpuInfoController {
     /**
      * 保存
      */
-    //@RequestMapping("/save")
-    ////@RequiresPermissions("product:spuinfo:save")
-    //public R save(@RequestBody SpuSaveVo vo){
-	//	//spuInfoService.save(spuInfo);
-    //
-    //    spuInfoService.saveSpuInfo(vo);
-    //
-    //    return R.ok();
-    //}
+    @RequestMapping("/save")
+    //@RequiresPermissions("product:spuinfo:save")
+    public R save(@RequestBody SpuSaveVo vo){
+		//spuInfoService.save(spuInfo);
+
+        spuInfoService.saveSpuInfo(vo);
+
+        return R.ok();
+    }
 
     /**
      * 修改

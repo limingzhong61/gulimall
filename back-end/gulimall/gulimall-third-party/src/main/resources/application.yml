@@ -9,13 +9,13 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
     # 文件上传秘钥
-#    alicloud:
-#      access-key: #####
-#      secret-key: #######
-#      oss:
-#        endpoint: oss-cn-nanjing.aliyuncs.com
-#        # 方便统一读取
-#        bucket: gulimall-hello-sso
+    alicloud:
+      access-key: #####
+      secret-key: #######
+      oss:
+        endpoint: oss-cn-nanjing.aliyuncs.com
+        # 方便统一读取
+        bucket: gulimall-hello-sso
 logging:
   level:
     io.codeofli.gulimall.product: debug

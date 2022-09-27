@@ -41,7 +41,6 @@ public class CouponController {
 
     @RequestMapping("/test")
     public R test(){
-
         return R.ok().put("name",name).put("age",age);
     }
 

@@ -58,134 +58,134 @@
 export default {
   components: {},
   props: {},
-  data() {
+  data () {
     return {
-      spuId: "",
-      catalogId: "",
+      spuId: '',
+      catalogId: '',
       dataResp: {
-        //后台返回的所有数据
+        // 后台返回的所有数据
         attrGroups: [],
         baseAttrs: []
       },
       spuAttrsMap: {}
-    };
+    }
   },
   computed: {},
   methods: {
-    clearData(){
-      this.dataResp.attrGroups = [];
-      this.dataResp.baseAttrs = [];
-      this.spuAttrsMap = {};
+    clearData () {
+      this.dataResp.attrGroups = []
+      this.dataResp.baseAttrs = []
+      this.spuAttrsMap = {}
     },
-    getSpuBaseAttrs() {
+    getSpuBaseAttrs () {
       this.$http({
         url: this.$http.adornUrl(`/product/attr/base/listforspu/${this.spuId}`),
-        method: "get"
+        method: 'get'
       }).then(({ data }) => {
         data.data.forEach(item => {
-          this.spuAttrsMap["" + item.attrId] = item;
-        });
-        console.log("~~~~", this.spuAttrsMap);
-      });
+          this.spuAttrsMap['' + item.attrId] = item
+        })
+        console.log('~~~~', this.spuAttrsMap)
+      })
     },
-    getQueryParams() {
-      this.spuId = this.$route.query.spuId;
-      this.catalogId = this.$route.query.catalogId;
-      console.log("----", this.spuId, this.catalogId);
+    getQueryParams () {
+      this.spuId = this.$route.query.spuId
+      this.catalogId = this.$route.query.catalogId
+      console.log('----', this.spuId, this.catalogId)
     },
-    showBaseAttrs() {
-      let _this = this;
+    showBaseAttrs () {
+      let _this = this
       this.$http({
         url: this.$http.adornUrl(
           `/product/attrgroup/${this.catalogId}/withattr`
         ),
-        method: "get",
+        method: 'get',
         params: this.$http.adornParams({})
       }).then(({ data }) => {
-        //先对表单的baseAttrs进行初始化
+        // 先对表单的baseAttrs进行初始化
         data.data.forEach(item => {
-          let attrArray = [];
+          let attrArray = []
           item.attrs.forEach(attr => {
-            let v = "";
-            if (_this.spuAttrsMap["" + attr.attrId]) {
-              v = _this.spuAttrsMap["" + attr.attrId].attrValue.split(";");
+            let v = ''
+            if (_this.spuAttrsMap['' + attr.attrId]) {
+              v = _this.spuAttrsMap['' + attr.attrId].attrValue.split(';')
               if (v.length == 1) {
-                v = v[0] + "";
+                v = v[0] + ''
               }
             }
             attrArray.push({
               attrId: attr.attrId,
               attrName: attr.attrName,
               attrValues: v,
-              showDesc: _this.spuAttrsMap["" + attr.attrId]
-                ? _this.spuAttrsMap["" + attr.attrId].quickShow
+              showDesc: _this.spuAttrsMap['' + attr.attrId]
+                ? _this.spuAttrsMap['' + attr.attrId].quickShow
                 : attr.showDesc
-            });
-          });
-          this.dataResp.baseAttrs.push(attrArray);
-        });
-        this.dataResp.attrGroups = data.data;
-      });
+            })
+          })
+          this.dataResp.baseAttrs.push(attrArray)
+        })
+        this.dataResp.attrGroups = data.data
+      })
     },
-    submitSpuAttrs() {
-      console.log("·····", this.dataResp.baseAttrs);
-      //spu_id  attr_id  attr_name             attr_value             attr_sort  quick_show
-      let submitData = [];
+    submitSpuAttrs () {
+      console.log('·····', this.dataResp.baseAttrs)
+      // spu_id  attr_id  attr_name             attr_value             attr_sort  quick_show
+      let submitData = []
       this.dataResp.baseAttrs.forEach(item => {
         item.forEach(attr => {
-          let val = "";
+          let val = ''
           if (attr.attrValues instanceof Array) {
-            val = attr.attrValues.join(";");
+            val = attr.attrValues.join(';')
           } else {
-            val = attr.attrValues;
+            val = attr.attrValues
           }
 
-          if (val != "") {
+          if (val != '') {
             submitData.push({
               attrId: attr.attrId,
               attrName: attr.attrName,
               attrValue: val,
               quickShow: attr.showDesc
-            });
+            })
           }
-        });
-      });
+        })
+      })
 
-      this.$confirm("修改商品规格信息, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('修改商品规格信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           this.$http({
             url: this.$http.adornUrl(`/product/attr/update/${this.spuId}`),
-            method: "post",
+            method: 'post',
             data: this.$http.adornData(submitData, false)
           }).then(({ data }) => {
             this.$message({
-              type: "success",
-              message: "属性修改成功!"
-            });
-          });
+              type: 'success',
+              message: '属性修改成功!'
+            })
+          })
         })
         .catch((e) => {
           this.$message({
-            type: "info",
-            message: "已取消修改"+e
-          });
-        });
+            type: 'info',
+            message: '已取消修改' + e
+          })
+        })
     }
   },
-  created() {},
-  activated() {
-    this.clearData();
-    this.getQueryParams();
+  created () {},
+  activated () {
+    this.clearData()
+    this.getQueryParams()
     if (this.spuId && this.catalogId) {
-      this.showBaseAttrs();
-      this.getSpuBaseAttrs();
+      this.showBaseAttrs()
+      this.getSpuBaseAttrs()
     }
   }
-};
+}
 </script>
 <style scoped>
 </style>

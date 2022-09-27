@@ -7,6 +7,7 @@ import com.aliyun.oss.model.PolicyConditions;
 import com.codeofli.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
+//动态的从配置中心读取配置
+@RefreshScope
 public class OssController {
 
     @Autowired

@@ -21,6 +21,7 @@ public class SpuInfoDescEntity implements Serializable {
 
 	/**
 	 * 商品id
+	 * 主键是输入的主键
 	 */
 	@TableId(type = IdType.INPUT)
 	private Long spuId;
