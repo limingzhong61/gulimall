@@ -154,7 +154,6 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
                 ////3、将成功采购的进行入库
                 PurchaseDetailEntity entity = detailService.getById(item.getItemId());
                 wareSkuService.addStock(entity.getSkuId(),entity.getWareId(),entity.getSkuNum());
-
             }
             detailEntity.setId(item.getItemId());
             updates.add(detailEntity);

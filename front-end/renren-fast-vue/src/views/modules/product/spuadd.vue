@@ -680,12 +680,10 @@ export default {
         }).then(({data}) => {
           // 先对表单的baseAttrs进行初始化
           data.data.forEach(item => {
-            // debugger
             let attrArray = []
             // item.attrs 可能为null
             if (item.attrs !== null) {
               item.attrs.forEach(attr => {
-                // debugger
                 attrArray.push({
                   attrId: attr.attrId,
                   attrValues: '',

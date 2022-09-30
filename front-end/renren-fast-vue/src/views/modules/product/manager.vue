@@ -91,15 +91,15 @@
 </template>
 
 <script>
-import CategoryCascader from "../common/category-cascader";
-import BrandSelect from "../common/brand-select";
+import CategoryCascader from '../common/category-cascader'
+import BrandSelect from '../common/brand-select'
 export default {
-  data() {
+  data () {
     return {
       catPathSub: null,
       brandIdSub: null,
       dataForm: {
-        key: "",
+        key: '',
         brandId: 0,
         catelogId: 0,
         price: {
@@ -115,36 +115,36 @@ export default {
       dataListSelections: [],
       addOrUpdateVisible: false,
       catelogPath: []
-    };
+    }
   },
   components: {
     CategoryCascader,
     BrandSelect
   },
-  activated() {
-    this.getDataList();
+  activated () {
+    this.getDataList()
   },
   methods: {
-    getSkuDetails(row, expand) {
-      //sku详情查询
-      console.log("展开某行...", row, expand);
+    getSkuDetails (row, expand) {
+      // sku详情查询
+      console.log('展开某行...', row, expand)
     },
-    //处理更多指令
-    handleCommand(row, command) {
-      console.log("~~~~~", row, command);
-      if ("stockSettings" == command) {
-        this.$router.push({ path: "/ware-sku", query: { skuId: row.skuId } });
+    // 处理更多指令
+    handleCommand (row, command) {
+      console.log('~~~~~', row, command)
+      if (command === 'stockSettings') {
+        this.$router.push({ path: '/ware-sku', query: { skuId: row.skuId } })
       }
     },
-    searchSkuInfo() {
-      this.getDataList();
+    searchSkuInfo () {
+      this.getDataList()
     },
     // 获取数据列表
-    getDataList() {
-      this.dataListLoading = true;
+    getDataList () {
+      this.dataListLoading = true
       this.$http({
-        url: this.$http.adornUrl("/product/skuinfo/list"),
-        method: "get",
+        url: this.$http.adornUrl('/product/skuinfo/list'),
+        method: 'get',
         params: this.$http.adornParams({
           page: this.pageIndex,
           limit: this.pageSize,
@@ -156,42 +156,42 @@ export default {
         })
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          this.dataList = data.page.list;
-          this.totalPage = data.page.totalCount;
+          this.dataList = data.page.list
+          this.totalPage = data.page.totalCount
         } else {
-          this.dataList = [];
-          this.totalPage = 0;
+          this.dataList = []
+          this.totalPage = 0
         }
-        this.dataListLoading = false;
-      });
+        this.dataListLoading = false
+      })
     },
     // 每页数
-    sizeChangeHandle(val) {
-      this.pageSize = val;
-      this.pageIndex = 1;
-      this.getDataList();
+    sizeChangeHandle (val) {
+      this.pageSize = val
+      this.pageIndex = 1
+      this.getDataList()
     },
     // 当前页
-    currentChangeHandle(val) {
-      this.pageIndex = val;
-      this.getDataList();
+    currentChangeHandle (val) {
+      this.pageIndex = val
+      this.getDataList()
     },
     // 多选
-    selectionChangeHandle(val) {
-      this.dataListSelections = val;
+    selectionChangeHandle (val) {
+      this.dataListSelections = val
     }
   },
-  mounted() {
-    this.catPathSub = PubSub.subscribe("catPath", (msg, val) => {
-      this.dataForm.catelogId = val[val.length - 1];
-    });
-    this.brandIdSub = PubSub.subscribe("brandId", (msg, val) => {
-      this.dataForm.brandId = val;
-    });
+  mounted () {
+    this.catPathSub = PubSub.subscribe('catPath', (msg, val) => {
+      this.dataForm.catelogId = val[val.length - 1]
+    })
+    this.brandIdSub = PubSub.subscribe('brandId', (msg, val) => {
+      this.dataForm.brandId = val
+    })
   },
-  beforeDestroy() {
-    PubSub.unsubscribe(this.catPathSub);
-    PubSub.unsubscribe(this.brandIdSub);
-  } //生命周期 - 销毁之前
-};
+  beforeDestroy () {
+    PubSub.unsubscribe(this.catPathSub)
+    PubSub.unsubscribe(this.brandIdSub)
+  } // 生命周期 - 销毁之前
+}
 </script>

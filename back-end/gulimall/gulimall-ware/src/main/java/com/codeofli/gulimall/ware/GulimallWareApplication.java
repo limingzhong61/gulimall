@@ -4,13 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 //@EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableFeignClients(basePackages = "com.codeofli.gulimall.ware.feign")
+@EnableFeignClients
 public class GulimallWareApplication {
 
     public static void main(String[] args) {

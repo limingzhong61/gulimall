@@ -40,7 +40,8 @@
                     v-model="dataResp.baseAttrs[gidx][aidx].showDesc"
                     :true-label="1"
                     :false-label="0"
-                  >快速展示</el-checkbox>
+                  >快速展示
+                  </el-checkbox>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
@@ -81,7 +82,7 @@ export default {
       this.$http({
         url: this.$http.adornUrl(`/product/attr/base/listforspu/${this.spuId}`),
         method: 'get'
-      }).then(({ data }) => {
+      }).then(({data}) => {
         data.data.forEach(item => {
           this.spuAttrsMap['' + item.attrId] = item
         })
@@ -101,27 +102,30 @@ export default {
         ),
         method: 'get',
         params: this.$http.adornParams({})
-      }).then(({ data }) => {
+      }).then(({data}) => {
         // 先对表单的baseAttrs进行初始化
         data.data.forEach(item => {
           let attrArray = []
-          item.attrs.forEach(attr => {
-            let v = ''
-            if (_this.spuAttrsMap['' + attr.attrId]) {
-              v = _this.spuAttrsMap['' + attr.attrId].attrValue.split(';')
-              if (v.length == 1) {
-                v = v[0] + ''
+          // item.attrs 可能为null
+          if (item.attrs !== null) {
+            item.attrs.forEach(attr => {
+              let v = ''
+              if (_this.spuAttrsMap['' + attr.attrId]) {
+                v = _this.spuAttrsMap['' + attr.attrId].attrValue.split(';')
+                if (v.length === 1) {
+                  v = v[0] + ''
+                }
               }
-            }
-            attrArray.push({
-              attrId: attr.attrId,
-              attrName: attr.attrName,
-              attrValues: v,
-              showDesc: _this.spuAttrsMap['' + attr.attrId]
-                ? _this.spuAttrsMap['' + attr.attrId].quickShow
-                : attr.showDesc
+              attrArray.push({
+                attrId: attr.attrId,
+                attrName: attr.attrName,
+                attrValues: v,
+                showDesc: _this.spuAttrsMap['' + attr.attrId]
+                  ? _this.spuAttrsMap['' + attr.attrId].quickShow
+                  : attr.showDesc
+              })
             })
-          })
+          }
           this.dataResp.baseAttrs.push(attrArray)
         })
         this.dataResp.attrGroups = data.data
@@ -140,7 +144,7 @@ export default {
             val = attr.attrValues
           }
 
-          if (val != '') {
+          if (val !== '') {
             submitData.push({
               attrId: attr.attrId,
               attrName: attr.attrName,
@@ -161,7 +165,7 @@ export default {
             url: this.$http.adornUrl(`/product/attr/update/${this.spuId}`),
             method: 'post',
             data: this.$http.adornData(submitData, false)
-          }).then(({ data }) => {
+          }).then(({data}) => {
             this.$message({
               type: 'success',
               message: '属性修改成功!'
@@ -176,8 +180,18 @@ export default {
         })
     }
   },
-  created () {},
+  created () {
+    console.log('created....')
+  },
   activated () {
+    console.log('接收到', this.$route.query.spuId)
+    if (this.$route.query.spuId) {
+      this.spuId = this.$route.query.spuId
+    }
+    console.log('接收到', this.$route.query.catalogId)
+    if (this.$route.query.catalogId) {
+      this.catalogId = this.$route.query.catalogId
+    }
     this.clearData()
     this.getQueryParams()
     if (this.spuId && this.catalogId) {
@@ -187,5 +201,5 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style scoped>
 </style>
