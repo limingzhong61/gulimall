@@ -16,9 +16,9 @@ import java.util.Map;
 /**
  * spu信息
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-01 22:50:32
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-01 22:50:32
  */
 @RestController
 @RequestMapping("product/spuinfo")
@@ -37,6 +37,16 @@ public class SpuInfoController {
         return R.ok().put("page", page);
     }
 
+
+    /**
+     * 商品上架
+     * @return
+     */
+    @PostMapping("/{spuId}/up")
+    public R upSpuForSearch(@PathVariable("spuId")Long spuId) {
+        spuInfoService.upSpuForSearch(spuId);
+        return R.ok();
+    }
 
     /**
      * 信息

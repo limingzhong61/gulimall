@@ -1,6 +1,6 @@
 package com.codeofli.gulimall.product.exception;
 
-import com.codeofli.common.exception.BizCodeEnume;
+import com.codeofli.common.exception.BizCodeEnum;
 import com.codeofli.common.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
@@ -30,13 +30,13 @@ public class GulimallExceptionControllerAdvice {
         bindingResult.getFieldErrors().forEach((fieldError)->{
             errorMap.put(fieldError.getField(),fieldError.getDefaultMessage());
         });
-        return R.error(BizCodeEnume.VALID_EXCEPTION.getCode(),BizCodeEnume.VALID_EXCEPTION.getMsg()).put("data",errorMap);
+        return R.error(BizCodeEnum.VALID_EXCEPTION.getCode(), BizCodeEnum.VALID_EXCEPTION.getMsg()).put("data",errorMap);
     }
 
     @ExceptionHandler(value = Throwable.class)
     public R handleException(Throwable throwable){
 
         log.error("错误：",throwable);
-        return R.error(BizCodeEnume.UNKNOWN_EXCEPTION.getCode(),BizCodeEnume.UNKNOWN_EXCEPTION.getMsg());
+        return R.error(BizCodeEnum.UNKNOWN_EXCEPTION.getCode(), BizCodeEnum.UNKNOWN_EXCEPTION.getMsg());
     }
 }

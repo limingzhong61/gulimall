@@ -1,7 +1,7 @@
-package io.niceseason.gulimall.product.feign;
+package com.codeofli.gulimall.product.feign;
 
-import io.niceseason.common.utils.R;
-import io.niceseason.gulimall.product.feign.fallback.SeckillFallbackService;
+import com.codeofli.common.utils.R;
+import com.codeofli.gulimall.product.feign.fallback.SeckillFallbackService;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

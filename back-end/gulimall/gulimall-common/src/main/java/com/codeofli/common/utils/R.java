@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
+ * Copyright (c) 2016-2022 人人开源 All rights reserved.
  *
  * https://www.renren.io
  *
@@ -8,6 +8,8 @@
 
 package com.codeofli.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
@@ -66,4 +68,19 @@ public class R extends HashMap<String, Object> {
 		return (Integer) this.get("code");
 	}
 
+	public R setData(Object data) {
+		put("data", data);
+		return this;
+	}
+
+	public <T> T getData(TypeReference<T> tTypeReference) {
+		return this.getData("data", tTypeReference);
+	}
+
+	public <T> T getData(String key, TypeReference<T> tTypeReference) {
+		Object data = this.get(key);
+		String toJSONString = JSON.toJSONString(data);
+		T t = JSON.parseObject(toJSONString, tTypeReference);
+		return t;
+	}
 }

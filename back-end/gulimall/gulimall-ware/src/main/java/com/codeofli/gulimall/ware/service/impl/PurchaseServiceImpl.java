@@ -1,6 +1,7 @@
 package com.codeofli.gulimall.ware.service.impl;
 
 import com.codeofli.common.constant.WareConstant;
+import com.codeofli.common.to.SkuHasStockVo;
 import com.codeofli.common.utils.PageUtils;
 import com.codeofli.common.utils.Query;
 import com.codeofli.gulimall.ware.dao.PurchaseDao;
@@ -91,6 +92,7 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
         purchaseEntity.setUpdateTime(new Date());
         this.updateById(purchaseEntity);
     }
+
 
     /**
      *

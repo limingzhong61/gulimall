@@ -15,9 +15,9 @@ import java.util.Map;
 /**
  * 库存工作单
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-08 09:59:40
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-08 09:59:40
  */
 @RestController
 @RequestMapping("ware/wareordertask")

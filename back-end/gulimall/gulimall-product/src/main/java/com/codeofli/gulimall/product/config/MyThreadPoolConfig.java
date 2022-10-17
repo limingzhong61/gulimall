@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.product.config;
+package com.codeofli.gulimall.product.config;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

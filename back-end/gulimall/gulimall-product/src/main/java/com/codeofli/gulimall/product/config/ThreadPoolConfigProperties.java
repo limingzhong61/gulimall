@@ -1,8 +1,7 @@
-package io.niceseason.gulimall.product.config;
+package com.codeofli.gulimall.product.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 @ConfigurationProperties(prefix = "gulimall.thread")
 @Data

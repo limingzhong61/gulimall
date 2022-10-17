@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 /**
  * 
  * 
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-11-17 13:50:10
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-11-17 13:50:10
  */
 @Data
 @TableName("wms_purchase_detail")

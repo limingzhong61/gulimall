@@ -1,5 +1,6 @@
 package com.codeofli.gulimall.ware.controller;
 
+import com.codeofli.common.to.SkuHasStockVo;
 import com.codeofli.common.utils.PageUtils;
 import com.codeofli.common.utils.R;
 import com.codeofli.gulimall.ware.entity.WareSkuEntity;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -15,9 +17,9 @@ import java.util.Map;
 /**
  * 商品库存
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-08 09:59:40
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-08 09:59:40
  */
 @RestController
 @RequestMapping("ware/waresku")
@@ -25,6 +27,10 @@ public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
 
+    @RequestMapping("/getSkuHasStocks")
+    public List<SkuHasStockVo> getSkuHasStocks(@RequestBody List<Long> ids) {
+        return wareSkuService.getSkuHasStocks(ids);
+    }
     /**
      * 列表
      */

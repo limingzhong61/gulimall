@@ -11,9 +11,9 @@ import java.util.Date;
 /**
  * spu信息
  * 
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-01 21:08:49
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-01 21:08:49
  */
 @Data
 @TableName("pms_spu_info")

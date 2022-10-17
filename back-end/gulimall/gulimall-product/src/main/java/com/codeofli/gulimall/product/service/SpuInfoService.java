@@ -10,9 +10,9 @@ import java.util.Map;
 /**
  * spu信息
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-01 21:08:49
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-01 21:08:49
  */
 public interface SpuInfoService extends IService<SpuInfoEntity> {
 
@@ -22,7 +22,7 @@ public interface SpuInfoService extends IService<SpuInfoEntity> {
 
     void saveBaseSpuInfo(SpuInfoEntity infoEntity);
 
-
+    void upSpuForSearch(Long spuId);
     PageUtils queryPageByCondition(Map<String, Object> params);
 
 

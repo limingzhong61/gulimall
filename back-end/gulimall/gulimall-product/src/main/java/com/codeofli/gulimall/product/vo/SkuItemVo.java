@@ -1,14 +1,13 @@
-package io.niceseason.gulimall.product.vo;
+package com.codeofli.gulimall.product.vo;
 
 
-import io.niceseason.gulimall.product.entity.SkuImagesEntity;
-import io.niceseason.gulimall.product.entity.SkuInfoEntity;
-import io.niceseason.gulimall.product.entity.SpuInfoDescEntity;
+import com.codeofli.gulimall.product.entity.SkuImagesEntity;
+import com.codeofli.gulimall.product.entity.SkuInfoEntity;
+import com.codeofli.gulimall.product.entity.SpuInfoDescEntity;
 import lombok.Data;
 import lombok.ToString;
 
 import java.util.List;
-
 
 
 @ToString

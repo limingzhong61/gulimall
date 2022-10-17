@@ -1,8 +1,8 @@
-package io.niceseason.gulimall.product.feign.fallback;
+package com.codeofli.gulimall.product.feign.fallback;
 
-import io.niceseason.common.exception.BizCodeEnum;
-import io.niceseason.common.utils.R;
-import io.niceseason.gulimall.product.feign.SeckillFeignService;
+import com.codeofli.common.exception.BizCodeEnum;
+import com.codeofli.common.utils.R;
+import com.codeofli.gulimall.product.feign.SeckillFeignService;
 import org.springframework.stereotype.Component;
 
 @Component

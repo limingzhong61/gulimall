@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.product.vo;
+package com.codeofli.gulimall.product.vo;
 
 import lombok.Data;
 import lombok.ToString;

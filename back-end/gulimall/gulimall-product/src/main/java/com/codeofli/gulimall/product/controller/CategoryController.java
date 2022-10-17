@@ -16,9 +16,9 @@ import java.util.List;
 /**
  * 商品三级分类
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-01 22:50:32
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-01 22:50:32
  */
 @RestController
 @RequestMapping("product/category")

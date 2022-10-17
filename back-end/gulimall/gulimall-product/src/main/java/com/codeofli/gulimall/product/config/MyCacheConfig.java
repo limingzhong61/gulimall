@@ -1,12 +1,10 @@
-package io.niceseason.gulimall.product.config;
+package com.codeofli.gulimall.product.config;
 
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import sun.misc.Cache;
 
 @Configuration
 public class MyCacheConfig {

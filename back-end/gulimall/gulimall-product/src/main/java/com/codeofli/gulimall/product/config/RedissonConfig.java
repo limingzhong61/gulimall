@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.product.config;
+package com.codeofli.gulimall.product.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -11,7 +11,7 @@ public class RedissonConfig {
     @Bean
     public RedissonClient redissonClient(){
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://192.168.56.102:6379");
+        config.useSingleServer().setAddress("redis://192.168.137.1:6379");
         RedissonClient redisson = Redisson.create(config);
         return redisson;
     }

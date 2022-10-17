@@ -13,5 +13,24 @@
         <result property="attrSort" column="attr_sort"/>
     </resultMap>
 
+    <resultMap id="SkuItemSaleAttrMap" type="com.codeofli.gulimall.product.vo.SkuItemSaleAttrVo">
+        <result property="attrId" column="attr_id"/>
+        <result property="attrName" column="attr_name"/>
+        <collection property="attrValues" ofType="com.codeofli.gulimall.product.vo.AttrValueWithSkuIdVo">
+            <result property="attrValue" column="attr_value"/>
+            <result property="skuIds" column="sku_ids"/>
+        </collection>
+    </resultMap>
+    <select id="listSaleAttrs" resultMap="SkuItemSaleAttrMap">
+        SELECT attr_id,attr_name,attr_value,GROUP_CONCAT(info.sku_id) sku_ids FROM pms_sku_info info
+                                                                                       LEFT JOIN pms_sku_sale_attr_value ssav ON info.sku_id=ssav.sku_id
+        WHERE info.spu_id=#{spuId}
+        GROUP BY ssav.attr_id,ssav.attr_name,ssav.attr_value
+    </select>
+
+    <select id="getSkuSaleAttrValuesAsString" resultType="string">
+        SELECT attr_value FROM pms_sku_sale_attr_value WHERE sku_id=#{skuId}
+    </select>
+
 
 </mapper>

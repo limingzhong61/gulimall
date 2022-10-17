@@ -13,9 +13,9 @@ import java.util.Map;
 /**
  * 商品属性
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-01 21:08:49
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-01 21:08:49
  */
 public interface AttrService extends IService<AttrEntity> {
 
@@ -35,5 +35,6 @@ public interface AttrService extends IService<AttrEntity> {
 
     PageUtils getNoRelationAttr(Map<String, Object> params, Long attrgroupId);
 
+    List<Long> selectSearchAttrIds(List<Long> attrIds);
 }
 

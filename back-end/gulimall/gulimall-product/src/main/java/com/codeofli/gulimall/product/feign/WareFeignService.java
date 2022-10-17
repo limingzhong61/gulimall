@@ -1,6 +1,6 @@
-package io.niceseason.gulimall.product.feign;
+package com.codeofli.gulimall.product.feign;
 
-import io.niceseason.common.to.SkuHasStockVo;
+import com.codeofli.common.to.SkuHasStockVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

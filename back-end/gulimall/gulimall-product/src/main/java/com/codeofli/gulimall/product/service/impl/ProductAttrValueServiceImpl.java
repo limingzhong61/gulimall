@@ -8,6 +8,7 @@ import com.codeofli.gulimall.product.service.ProductAttrValueService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.codeofli.gulimall.product.vo.SpuItemAttrGroupVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +52,12 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
             return item;
         }).collect(Collectors.toList());
         this.saveBatch(collect);
+    }
+
+    @Override
+    public List<SpuItemAttrGroupVo> getProductGroupAttrsBySpuId(Long spuId, Long catalogId) {
+
+        return baseMapper.getProductGroupAttrsBySpuId(spuId, catalogId);
     }
 
 }

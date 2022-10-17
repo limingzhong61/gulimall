@@ -1,5 +1,6 @@
 package com.codeofli.gulimall.product.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.codeofli.common.utils.PageUtils;
 import com.codeofli.common.utils.R;
 import com.codeofli.gulimall.product.entity.SkuInfoEntity;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -15,9 +17,9 @@ import java.util.Map;
 /**
  * sku信息
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-01 22:50:32
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-01 22:50:32
  */
 @RestController
 @RequestMapping("product/skuinfo")
@@ -80,5 +82,6 @@ public class SkuInfoController {
 
         return R.ok();
     }
+
 
 }

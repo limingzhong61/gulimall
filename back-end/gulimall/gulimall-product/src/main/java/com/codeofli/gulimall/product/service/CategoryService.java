@@ -3,6 +3,7 @@ package com.codeofli.gulimall.product.service;
 import com.codeofli.common.utils.PageUtils;
 import com.codeofli.gulimall.product.entity.CategoryEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.codeofli.gulimall.product.vo.Catalog2Vo;
 
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,9 @@ import java.util.Map;
 /**
  * 商品三级分类
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-01 21:08:48
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-01 21:08:48
  */
 public interface CategoryService extends IService<CategoryEntity> {
 
@@ -33,5 +34,8 @@ public interface CategoryService extends IService<CategoryEntity> {
 
     void updateCascade(CategoryEntity category);
 
+    List<CategoryEntity> getLevel1Catagories();
+
+    Map<String, List<Catalog2Vo>> getCatalogJsonDbWithSpringCache();
 }
 

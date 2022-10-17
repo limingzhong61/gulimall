@@ -19,9 +19,9 @@ import java.util.Map;
 /**
  * 商品属性
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-01 22:50:32
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-10-01 22:50:32
  */
 @RestController
 @RequestMapping("product/attr")

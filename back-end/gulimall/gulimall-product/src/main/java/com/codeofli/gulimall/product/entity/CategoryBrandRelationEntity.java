@@ -9,9 +9,9 @@ import java.io.Serializable;
 /**
  * 品牌分类关联
  * 
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-11-17 21:25:25
+ * @author codeofli
+ * @email codeofli@gmail.com
+ * @date 2022-11-17 21:25:25
  */
 @Data
 @TableName("pms_category_brand_relation")

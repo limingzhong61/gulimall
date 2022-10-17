@@ -1,5 +1,6 @@
 package com.codeofli.gulimall.ware.service.impl;
 
+import com.codeofli.common.to.SkuHasStockVo;
 import com.codeofli.common.utils.PageUtils;
 import com.codeofli.common.utils.Query;
 import com.codeofli.common.utils.R;
@@ -16,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("wareSkuService")
@@ -85,4 +87,15 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 
     }
 
+    @Override
+    public List<SkuHasStockVo> getSkuHasStocks(List<Long> ids) {
+        List<SkuHasStockVo> skuHasStockVos = ids.stream().map(id -> {
+            SkuHasStockVo skuHasStockVo = new SkuHasStockVo();
+            skuHasStockVo.setSkuId(id);
+            Long count = baseMapper.getTotalStock(id);
+            skuHasStockVo.setHasStock(count==null?false:count>0);
+            return skuHasStockVo;
+        }).collect(Collectors.toList());
+        return skuHasStockVos;
+    }
 }
