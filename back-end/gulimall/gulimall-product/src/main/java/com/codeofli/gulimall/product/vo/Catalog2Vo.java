@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**'
+ * 2级分类vo
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
