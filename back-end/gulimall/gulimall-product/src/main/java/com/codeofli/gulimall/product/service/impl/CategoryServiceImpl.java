@@ -1,5 +1,7 @@
 package com.codeofli.gulimall.product.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,8 +14,11 @@ import com.codeofli.gulimall.product.service.CategoryService;
 import com.codeofli.gulimall.product.vo.Catalog2Vo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +35,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Autowired
     CategoryBrandRelationService categoryBrandRelationService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -102,6 +110,83 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 //        System.out.println("查询一级菜单时间:"+(System.currentTimeMillis()-start));
         return parent_cid;
     }
+    public Map<String, List<Catalog2Vo>> getCatalogJson(){
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        String catalogJson = ops.get("catalogJson");
+        if (catalogJson == null) {
+            Map<String, List<Catalog2Vo>> categoriesDb = getCategoriesDb();
+            String toJSONString = JSON.toJSONString(categoriesDb);
+            ops.set("catalogJson",toJSONString);
+            return categoriesDb;
+        }
+        Map<String, List<Catalog2Vo>> listMap = JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {});
+        return listMap;
+    }
+
+    //@Override
+    public Map<String, List<Catalog2Vo>> getCategoryMap() {
+//        List<CategoryEntity> categoryEntities = this.list(new QueryWrapper<CategoryEntity>().eq("cat_level", 2));
+//
+//        List<Catalog2Vo> catalog2Vos = categoryEntities.stream().map(categoryEntity -> {
+//            List<CategoryEntity> level3 = this.list(new QueryWrapper<CategoryEntity>().eq("parent_cid", categoryEntity.getCatId()));
+//            List<Catalog2Vo.Catalog3Vo> catalog3Vos = level3.stream().map(cat -> {
+//                return new Catalog2Vo.Catalog3Vo(cat.getParentCid().toString(), cat.getCatId().toString(), cat.getName());
+//            }).collect(Collectors.toList());
+//            Catalog2Vo catalog2Vo = new Catalog2Vo(categoryEntity.getParentCid().toString(), categoryEntity.getCatId().toString(), categoryEntity.getName(), catalog3Vos);
+//            return catalog2Vo;
+//        }).collect(Collectors.toList());
+//        Map<String, List<Catalog2Vo>> catalogMap = new HashMap<>();
+//        for (Catalog2Vo catalog2Vo : catalog2Vos) {
+//            List<Catalog2Vo> list = catalogMap.getOrDefault(catalog2Vo.getCatalog1Id(), new LinkedList<>());
+//            list.add(catalog2Vo);
+//            catalogMap.put(catalog2Vo.getCatalog1Id(),list);
+//        }
+//        return catalogMap;
+
+//        //缓存改写1：使用map作为本地缓存
+//        Map<String, List<Catalog2Vo>> catalogMap = (Map<String, List<Catalog2Vo>>) cache.get("catalogMap");
+//        if (catalogMap == null) {
+//            catalogMap = getCategoriesDb();
+//            cache.put("catalogMap",catalogMap);
+//        }
+//        return catalogMap;
+
+//        //缓存改写2：使用redis作为本地缓存
+//        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+//        String catalogJson = ops.get("catalogJson");
+//        if (StringUtils.isEmpty(catalogJson)) {
+//            Map<String, List<Catalog2Vo>> categoriesDb = getCategoriesDb();
+//            String toJSONString = JSON.toJSONString(categoriesDb);
+//            ops.set("catalogJson",toJSONString);
+//            return categoriesDb;
+//        }
+//        Map<String, List<Catalog2Vo>> listMap = JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {});
+//        return listMap;
+
+        //缓存改写3：加锁解决缓存穿透问题
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        String catalogJson = ops.get("catalogJson");
+        if (StringUtils.isEmpty(catalogJson)) {
+            System.out.println("缓存不命中，准备查询数据库。。。");
+//            synchronized (this) {
+//                String synCatalogJson = stringRedisTemplate.opsForValue().get("catalogJson");
+//                if (StringUtils.isEmpty(synCatalogJson)) {
+            Map<String, List<Catalog2Vo>> categoriesDb= getCategoriesDb();
+            String toJSONString = JSON.toJSONString(categoriesDb);
+            ops.set("catalogJson", toJSONString);
+            return categoriesDb;
+//                }else {
+//                    Map<String, List<Catalog2Vo>> listMap = JSON.parseObject(synCatalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {});
+//                    return listMap;
+//                }
+//            }
+
+        }
+        System.out.println("缓存命中。。。。");
+        Map<String, List<Catalog2Vo>> listMap = JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {});
+        return listMap;
+    }
+
 
     @Cacheable(value = {"category"},key = "#root.methodName",sync = true)
     public Map<String, List<Catalog2Vo>> getCatalogJsonDbWithSpringCache() {
