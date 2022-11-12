@@ -49,6 +49,13 @@ public class IndexController {
         return map;
     }
 
+    ///保证一定能读到最新数据,修改期间，写锁是一个排他锁（互斥锁、独享锁)。读锁是一个共享锁
+    // 写锁没释放读就必须等待
+    // 读＋读: 相当于无锁，并发读，只会在redis中记录好，所有当前的读锁。他们都会同时加锁成功
+    // 写＋读:等待写锁释放
+    // 写＋写:阻塞方式
+    // 读＋写:有读锁。写也需要等待。
+    //只要有写得存在，都必须等待
     @GetMapping("/read")
     @ResponseBody
     public String read() {
@@ -73,6 +80,7 @@ public class IndexController {
         RLock wLock = lock.writeLock();
         String s = UUID.randomUUID().toString();
         try {
+            //1、改数据加写锁，读数据加读锁
             wLock.lock();
             System.out.println("写锁加锁" + Thread.currentThread().getId());
             Thread.sleep(10000);
@@ -110,14 +118,22 @@ public class IndexController {
         return "hello";
     }
 
+    /**
+     * 车库停车,
+     * 3车位,
+     * 信号量也可以用作分布式限流;
+     */
     @GetMapping("/park")
     @ResponseBody
     public String park() {
         RSemaphore park = redissonClient.getSemaphore("park");
-        try {
-            park.acquire(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        //park.acquire(2); //  获取一个信号，获取一个值，占一个车位
+        boolean b = park.tryAcquire();
+        if (b) {
+            //执行业务
+        }else{
+            return "error";
         }
         return "停进2";
     }
@@ -147,7 +163,7 @@ public class IndexController {
     @ResponseBody
     public String offLatch() {
         RCountDownLatch latch = redissonClient.getCountDownLatch("CountDownLatch");
-        latch.countDown();
+        latch.countDown();  // 计数减1
         return "门栓被放开1";
     }
 

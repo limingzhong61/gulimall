@@ -12,6 +12,8 @@ import com.codeofli.gulimall.product.entity.CategoryEntity;
 import com.codeofli.gulimall.product.service.CategoryBrandRelationService;
 import com.codeofli.gulimall.product.service.CategoryService;
 import com.codeofli.gulimall.product.vo.Catalog2Vo;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -37,6 +39,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    RedissonClient redissonClient;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -100,7 +105,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         this.updateById(category);
         categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
     }
-
+    //每一个需要缓存的数据我们都来指定要放到那个名字的缓存。【缓存的分区(按照业务类型分)】
+    @Cacheable("category")
     @Override
     public List<CategoryEntity> getLevel1Catagories() {
 //        long start = System.currentTimeMillis();
@@ -129,6 +135,21 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     //从数据库中查出三级分类
+    public synchronized Map<String, List<Catalog2Vo>> getCatalogJsonFromDbWithRedissonLock() {
+        // 锁的名字。锁的粒度，越细越好越快。
+        RLock lock = redissonClient.getLock("CatalogJson-lock");
+        lock.lock();
+        Map<String, List<Catalog2Vo>> categoriesDb;
+        try {
+            System.out.println("获取分布式锁失成功。");
+            categoriesDb = getDataFromDb();
+        } finally {
+            lock.unlock();
+        }
+        return categoriesDb;
+    }
+
+    //从数据库中查出三级分类
     public synchronized Map<String, List<Catalog2Vo>> getCatalogJsonFromDbWithRedisLock() {
         // 1、占分布式锁。去redis占坑
         String uuid = UUID.randomUUID().toString();
@@ -139,10 +160,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             // 2、设置过期时间，必须和加锁是同步的，原子的
             //  redisTemplate.expire( "lock", 30, TimeUnit.SECONDS ) ;
             Map<String, List<Catalog2Vo>> categoriesDb;
-            try{
+            try {
                 System.out.println("获取分布式锁失成功。");
                 categoriesDb = getDataFromDb();
-            }finally {
+            } finally {
                 //获取值对比+对比成功删除=原子操作     Lua脚本解锁
                 //String lockValue = redisTempLate.opsForVaLue( ).get("Lock");
                 // if(uuid.equals(LockValue)){
