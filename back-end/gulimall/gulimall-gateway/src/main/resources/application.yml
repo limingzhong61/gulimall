@@ -44,11 +44,17 @@ spring:
             - Path=/api/**    #默认前端项目都带上api前缀，
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
-
+        #将主机地址为search.gulimall.com转发至gulimall-search
+        - id: gulimall_serach_host
+          uri: lb://gulimall-search
+          predicates:
+            - Host=search.gulimall.com
+        #将主机地址为**.gulimall.com转发至gulimall-product
         - id: gulimall_host
           uri: lb://gulimall-product
           predicates:
             - Host=**.gulimall.com,gulimall.com
+
 
 
 #        - id: product_route

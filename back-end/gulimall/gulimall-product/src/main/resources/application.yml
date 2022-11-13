@@ -14,7 +14,7 @@ spring:
     #允许循环依赖
     allow-circular-references: true
   thymeleaf:
-    cache: true
+    cache: false
     suffix: .html
     prefix: classpath:/templates/
   redis:
