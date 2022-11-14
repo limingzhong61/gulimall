@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * 封装页面所有可能传递过来的查询条件
+ */
 @Data
 public class SearchParam {
 
