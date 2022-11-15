@@ -4,7 +4,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by 13 on 2017/5/5.
  */
 public class ThreadPoolDemo {
     public static class MyTask implements Runnable {
