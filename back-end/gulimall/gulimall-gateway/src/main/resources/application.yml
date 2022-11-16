@@ -49,6 +49,13 @@ spring:
           uri: lb://gulimall-search
           predicates:
             - Host=search.gulimall.com
+
+        #将主机地址为auth.gulimall.com转发至gulimall-auth
+        - id: gulimall_auth_host
+          uri: lb://gulimall-auth-server
+          predicates:
+            - Host=auth.gulimall.com
+
         #将主机地址为**.gulimall.com转发至gulimall-product
         - id: gulimall_host
           uri: lb://gulimall-product
