@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: gulimall-auth-server
+  cloud:
+    nacos:
+      discovery:
+        #nacos注册中心地址
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+  redis:
+    host: 192.168.242.5
+  session:
+    store-type: redis
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+    discovery-client-enabled: false
+  #采样取值介于 0到1之间，1则表示全部收集
+  sleuth:
+    sampler:
+      probability: 1
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/
+
+server:
+  port: 20000
+  servlet:
+    session:
+      timeout: 30m
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
