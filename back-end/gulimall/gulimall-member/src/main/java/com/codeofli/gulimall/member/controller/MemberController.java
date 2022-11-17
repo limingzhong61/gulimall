@@ -4,6 +4,11 @@ import java.util.Arrays;
 import java.util.Map;
 
 //import com.codeofli.gulimall.member.feign.CouponFeignService;
+import com.codeofli.common.exception.BizCodeEnum;
+import com.codeofli.gulimall.member.exception.PhoneNumExistException;
+import com.codeofli.gulimall.member.exception.UserNameExistException;
+import com.codeofli.gulimall.member.vo.MemberLoginVo;
+import com.codeofli.gulimall.member.vo.MemberRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,6 +97,32 @@ public class MemberController {
 		memberService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    /**
+     * 注册会员
+     * @return
+     */
+    @RequestMapping("/register")
+    public R register(@RequestBody MemberRegisterVo registerVo) {
+        try {
+            memberService.register(registerVo);
+        } catch (UserNameExistException userException) {
+            return R.error(BizCodeEnum.USER_EXIST_EXCEPTION.getCode(), BizCodeEnum.USER_EXIST_EXCEPTION.getMsg());
+        } catch (PhoneNumExistException phoneException) {
+            return R.error(BizCodeEnum.PHONE_EXIST_EXCEPTION.getCode(), BizCodeEnum.PHONE_EXIST_EXCEPTION.getMsg());
+        }
+        return R.ok();
+    }
+
+    @RequestMapping("/login")
+    public R login(@RequestBody MemberLoginVo loginVo) {
+        MemberEntity entity=memberService.login(loginVo);
+        if (entity!=null){
+            return R.ok().put("memberEntity",entity);
+        }else {
+            return R.error(BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getCode(), BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getMsg());
+        }
     }
 
 }
