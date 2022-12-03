@@ -31,39 +31,38 @@ public class PurchaseController {
 
     ///ware/purchase/done
     @PostMapping("/done")
-    public R finish(@RequestBody PurchaseDoneVo doneVo){
-
-        purchaseService.done(doneVo);
-
+    public R finishPurchase(@RequestBody PurchaseDoneVo purchaseDoneVo) {
+        purchaseService.finishPurchase(purchaseDoneVo);
         return R.ok();
     }
 
     /**
      * 领取采购单
+     * @param ids
      * @return
      */
     @PostMapping("/received")
-    public R received(@RequestBody List<Long> ids){
-
-        purchaseService.received(ids);
-
+    public R ReceivedPurchase(@RequestBody List<Long> ids) {
+        purchaseService.ReceivedPurchase(ids);
         return R.ok();
     }
 
     ///ware/purchase/unreceive/list
     ///ware/purchase/merge
+    /**
+     * 合并采购需求
+     * @param mergeVo
+     * @return
+     */
     @PostMapping("/merge")
-    public R merge(@RequestBody MergeVo mergeVo){
-
-        purchaseService.mergePurchase(mergeVo);
+    public R mergePurchaseDetail(@RequestBody MergeVo mergeVo) {
+        purchaseService.mergePurchaseDetail(mergeVo);
         return R.ok();
     }
 
     @RequestMapping("/unreceive/list")
-    //@RequiresPermissions("ware:purchase:list")
-    public R unreceivelist(@RequestParam Map<String, Object> params){
-        PageUtils page = purchaseService.queryPageUnreceivePurchase(params);
-
+    public R listUnreceive(@RequestParam Map<String, Object> params) {
+        PageUtils page = purchaseService.listUnreceive(params);
         return R.ok().put("page", page);
     }
 

@@ -6,7 +6,7 @@
  * 版权所有，侵权必究！
  */
 
-package io.niceseason.common.exception;
+package com.codeofli.common.exception;
 
 /**
  * 自定义异常

@@ -1,9 +1,9 @@
-package io.niceseason.gulimall.order.web;
+package com.codeofli.gulimall.order.web;
 
 import com.alipay.api.AlipayApiException;
-import io.niceseason.gulimall.order.config.AlipayTemplate;
-import io.niceseason.gulimall.order.service.OrderService;
-import io.niceseason.gulimall.order.vo.PayVo;
+import com.codeofli.gulimall.order.config.AlipayTemplate;
+import com.codeofli.gulimall.order.service.OrderService;
+import com.codeofli.gulimall.order.vo.PayVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -2,17 +2,17 @@ package com.codeofli.gulimall.order.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 订单操作历史记录
  * 
- * @author codeofli
- * @email 1162314270@qq.com
- * @date 2022-05-15 20:02:08
+ * @author Ethan
+ * @email hongshengmo@163.com
+ * @date 2020-05-27 23:07:28
  */
 @Data
 @TableName("oms_order_operate_history")

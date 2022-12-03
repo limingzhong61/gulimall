@@ -1,4 +1,4 @@
-package io.niceseason.common.to.mq;
+package com.codeofli.common.mq;
 
 import lombok.Data;
 

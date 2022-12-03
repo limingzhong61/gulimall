@@ -1,4 +1,4 @@
-package io.niceseason.common.exception;
+package com.codeofli.common.exception;
 
 import lombok.Getter;
 import lombok.Setter;

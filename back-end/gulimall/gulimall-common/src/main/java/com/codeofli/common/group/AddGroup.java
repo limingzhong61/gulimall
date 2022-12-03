@@ -1,4 +1,4 @@
-package io.niceseason.common.group;
+package com.codeofli.common.group;
 
 public interface AddGroup {
 }

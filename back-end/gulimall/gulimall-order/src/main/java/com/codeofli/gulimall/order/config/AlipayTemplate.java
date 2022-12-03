@@ -1,10 +1,10 @@
-package io.niceseason.gulimall.order.config;
+package com.codeofli.gulimall.order.config;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import io.niceseason.gulimall.order.vo.PayVo;
+import com.codeofli.gulimall.order.vo.PayVo;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

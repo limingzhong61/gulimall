@@ -1,8 +1,8 @@
-package io.niceseason.gulimall.order.listener;
+package com.codeofli.gulimall.order.listener;
 
 import com.rabbitmq.client.Channel;
-import io.niceseason.gulimall.order.entity.OrderEntity;
-import io.niceseason.gulimall.order.service.OrderService;
+import com.codeofli.gulimall.order.entity.OrderEntity;
+import com.codeofli.gulimall.order.service.OrderService;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

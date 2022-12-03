@@ -1,6 +1,6 @@
-package io.niceseason.gulimall.order.web;
+package com.codeofli.gulimall.order.web;
 
-import io.niceseason.gulimall.order.entity.OrderEntity;
+import com.codeofli.gulimall.order.entity.OrderEntity;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

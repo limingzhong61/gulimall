@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.order.enume;
+package com.codeofli.gulimall.order.enume;
 
 public enum OrderStatusEnum {
 

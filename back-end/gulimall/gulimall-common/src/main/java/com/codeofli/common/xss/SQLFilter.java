@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 人人开源 All rights reserved.
+ * Copyright (c) 2016-2019 人人开源 All rights reserved.
  *
  * https://www.renren.io
  *
@@ -8,7 +8,7 @@
 
 package com.codeofli.common.xss;
 
-import com.codeofli.common.utils.RRException;
+import com.codeofli.common.exception.RRException;
 import org.apache.commons.lang.StringUtils;
 
 /**

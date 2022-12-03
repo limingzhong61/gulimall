@@ -1,6 +1,6 @@
-package io.niceseason.gulimall.order.feign;
+package com.codeofli.gulimall.order.feign;
 
-import io.niceseason.gulimall.order.vo.MemberAddressVo;
+import com.codeofli.gulimall.order.vo.MemberAddressVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

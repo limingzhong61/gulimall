@@ -1,8 +1,7 @@
-package io.niceseason.gulimall.order.config;
+package com.codeofli.gulimall.order.config;
 
-import io.niceseason.gulimall.order.interceptor.LoginInterceptor;
+import com.codeofli.gulimall.order.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

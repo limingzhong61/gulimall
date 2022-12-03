@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.order.config;
+package com.codeofli.gulimall.order.config;
 
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;

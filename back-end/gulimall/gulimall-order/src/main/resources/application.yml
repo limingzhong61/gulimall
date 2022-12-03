@@ -4,8 +4,28 @@ spring:
     password: root
     url: jdbc:mysql://192.168.242.5:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.242.5
+  session:
+    store-type: redis
+  cloud:
+    nacos:
+      discovery:
+        #nacos注册中心地址
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
 
-
+  rabbitmq:
+    host: 192.168.242.5
+    username: itcast
+    password: 123321
+    listener:
+      simple:
+        acknowledge-mode: manual
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
@@ -16,3 +36,10 @@ mybatis-plus:
 
 server:
   port: 9000
+
+# 自定义线程池参数
+gulimall:
+  thread:
+    corePoolSize: 10
+    maxPoolSize: 20
+    keepAliveTime: 300

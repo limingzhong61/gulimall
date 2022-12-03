@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.order.config;
+package com.codeofli.gulimall.order.config;
 
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
@@ -6,8 +6,16 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
 
+/**
+ * @author nicolas
+ */
 @Configuration
 public class MyRabbitmqConfig {
+    /**
+     * 容器中的Bingding，Queue，Exchange都会自动创建（RabbitMQ没有的情况下）
+     * RabbitMQ只要有。@Bean声明属性发生变化也不会覆盖。
+     * @return
+     */
     @Bean
     public Exchange orderEventExchange() {
         /**

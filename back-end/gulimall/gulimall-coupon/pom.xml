@@ -5,6 +5,7 @@
     <groupId>com.codeofli.gulimall</groupId>
     <artifactId>gulimall-coupon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>gulimall-coupon</name>
     <description>谷粒商城-优惠券服务</description>
 

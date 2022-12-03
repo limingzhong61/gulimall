@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.order.vo;
+package com.codeofli.gulimall.order.vo;
 
 import lombok.Data;
 

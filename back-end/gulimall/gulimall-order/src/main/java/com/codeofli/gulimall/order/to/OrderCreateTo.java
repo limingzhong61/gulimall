@@ -1,7 +1,7 @@
-package io.niceseason.gulimall.order.to;
+package com.codeofli.gulimall.order.to;
 
-import io.niceseason.gulimall.order.entity.OrderEntity;
-import io.niceseason.gulimall.order.entity.OrderItemEntity;
+import com.codeofli.gulimall.order.entity.OrderEntity;
+import com.codeofli.gulimall.order.entity.OrderItemEntity;
 import lombok.Data;
 
 import java.math.BigDecimal;

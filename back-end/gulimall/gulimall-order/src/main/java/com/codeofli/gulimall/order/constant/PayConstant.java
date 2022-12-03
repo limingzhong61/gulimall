@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.order.constant;
+package com.codeofli.gulimall.order.constant;
 
 /**
  * @Description:

@@ -1,6 +1,6 @@
-package io.niceseason.gulimall.order.vo;
+package com.codeofli.gulimall.order.vo;
 
-import io.niceseason.gulimall.order.entity.OrderEntity;
+import com.codeofli.gulimall.order.entity.OrderEntity;
 import lombok.Data;
 
 @Data

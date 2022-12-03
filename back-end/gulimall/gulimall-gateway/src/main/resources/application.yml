@@ -56,11 +56,24 @@ spring:
           predicates:
             - Host=auth.gulimall.com
 
+        #将主机地址为cart.gulimall.com转发至gulimall-cart
+        - id: gulimall_cart_host
+          uri: lb://gulimall-cart
+          predicates:
+            - Host=cart.gulimall.com
+
+        #将主机地址为order.gulimall.com转发至gulimall-order
+        - id: gulimall_order_host
+          uri: lb://gulimall-order
+          predicates:
+            - Host=order.gulimall.com
+
         #将主机地址为**.gulimall.com转发至gulimall-product
         - id: gulimall_host
           uri: lb://gulimall-product
           predicates:
-            - Host=**.gulimall.com,gulimall.com
+            - Host=gulimall.com,item.gulimall.com
+#            - Host=**.gulimall.com,gulimall.com
 
 
 

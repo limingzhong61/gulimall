@@ -1,12 +1,11 @@
-package io.niceseason.gulimall.order.web;
+package com.codeofli.gulimall.order.web;
 
-import io.niceseason.common.exception.NoStockException;
-import io.niceseason.common.utils.PageUtils;
-import io.niceseason.common.utils.R;
-import io.niceseason.gulimall.order.service.OrderService;
-import io.niceseason.gulimall.order.vo.OrderConfirmVo;
-import io.niceseason.gulimall.order.vo.OrderSubmitVo;
-import io.niceseason.gulimall.order.vo.SubmitOrderResponseVo;
+import com.codeofli.common.exception.NoStockException;
+import com.codeofli.common.utils.PageUtils;
+import com.codeofli.gulimall.order.service.OrderService;
+import com.codeofli.gulimall.order.vo.OrderConfirmVo;
+import com.codeofli.gulimall.order.vo.OrderSubmitVo;
+import com.codeofli.gulimall.order.vo.SubmitOrderResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +23,7 @@ public class OrderWebController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/{page}/order.html")
+    @GetMapping("/{page}.html")
     public String toPage(@PathVariable("page") String page) {
         return page;
     }
@@ -36,15 +35,23 @@ public class OrderWebController {
         return "confirm";
     }
 
+    /**
+     * 下单功能
+     *
+     * @param submitVo
+     * @param model
+     * @param attributes
+     * @return
+     */
     @RequestMapping("/submitOrder")
     public String submitOrder(OrderSubmitVo submitVo, Model model, RedirectAttributes attributes) {
-        try{
-            SubmitOrderResponseVo responseVo=orderService.submitOrder(submitVo);
+        try {
+            SubmitOrderResponseVo responseVo = orderService.submitOrder(submitVo);
             Integer code = responseVo.getCode();
-            if (code==0){
+            if (code == 0) {
                 model.addAttribute("order", responseVo.getOrder());
                 return "pay";
-            }else {
+            } else {
                 String msg = "下单失败;";
                 switch (code) {
                     case 1:
@@ -57,8 +64,8 @@ public class OrderWebController {
                 attributes.addFlashAttribute("msg", msg);
                 return "redirect:http://order.gulimall.com/toTrade";
             }
-        }catch (Exception e){
-            if (e instanceof NoStockException){
+        } catch (Exception e) {
+            if (e instanceof NoStockException) {
                 String msg = "下单失败，商品无库存";
                 attributes.addFlashAttribute("msg", msg);
             }
@@ -68,11 +75,12 @@ public class OrderWebController {
 
     /**
      * 获取当前用户的所有订单
+     *
      * @return
      */
     @RequestMapping("/memberOrder.html")
-    public String memberOrder(@RequestParam(value = "pageNum",required = false,defaultValue = "0") Integer pageNum,
-                         Model model){
+    public String memberOrder(@RequestParam(value = "pageNum", required = false, defaultValue = "0") Integer pageNum,
+                              Model model) {
         Map<String, Object> params = new HashMap<>();
         params.put("page", pageNum.toString());
         PageUtils page = orderService.getMemberOrderPage(params);

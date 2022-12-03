@@ -1,7 +1,7 @@
-package io.niceseason.gulimall.order.interceptor;
+package com.codeofli.gulimall.order.interceptor;
 
-import io.niceseason.common.constant.AuthServerConstant;
-import io.niceseason.common.vo.MemberResponseVo;
+import com.codeofli.common.constant.AuthServerConstant;
+import com.codeofli.common.vo.MemberResponseVo;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,11 +18,18 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        /**
+         * feign确实会请求头丢失 ，但这跟请求头数据丢失不大。当用户在登录状态下下单未支付，
+         * 而此时消息已存在MQ中，就在消息存活时间内，用户突然退出登录处于离线，此时消息一到，便不是登录状态，此时也需要解锁
+         *
+         */
         String requestURI = request.getRequestURI();
         AntPathMatcher matcher = new AntPathMatcher();
         boolean match1 = matcher.match("/order/order/infoByOrderSn/**", requestURI);
         boolean match2 = matcher.match("/payed/**", requestURI);
-        if (match1||match2) return true;
+        if (match1||match2) {
+            return true;
+        }
 
         HttpSession session = request.getSession();
         MemberResponseVo memberResponseVo = (MemberResponseVo) session.getAttribute(AuthServerConstant.LOGIN_USER);

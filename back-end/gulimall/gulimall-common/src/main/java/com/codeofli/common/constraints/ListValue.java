@@ -1,4 +1,4 @@
-package io.niceseason.common.constraints;
+package com.codeofli.common.constraints;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -7,7 +7,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
@@ -15,7 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RUNTIME)
 public @interface ListValue {
-    String message() default "{io.niceseason.common.valid.ListValue.message}";
+    String message() default "{com.codeofli.common.valid.ListValue.message}";
 
     Class<?>[] groups() default { };
 

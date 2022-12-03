@@ -1,28 +1,23 @@
 package com.codeofli.gulimall.order.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.codeofli.gulimall.order.entity.OrderItemEntity;
-import com.codeofli.gulimall.order.service.OrderItemService;
 import com.codeofli.common.utils.PageUtils;
 import com.codeofli.common.utils.R;
+import com.codeofli.gulimall.order.entity.OrderItemEntity;
+import com.codeofli.gulimall.order.service.OrderItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
 /**
  * 订单项信息
  *
- * @author codeofli
- * @email 1162314270@qq.com
- * @date 2022-05-15 20:02:08
+ * @author Ethan
+ * @email hongshengmo@163.com
+ * @date 2020-05-27 23:07:28
  */
 @RestController
 @RequestMapping("order/orderitem")
@@ -34,7 +29,7 @@ public class OrderItemController {
      * 列表
      */
     @RequestMapping("/list")
-        public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params){
         PageUtils page = orderItemService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -45,7 +40,7 @@ public class OrderItemController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-        public R info(@PathVariable("id") Long id){
+    public R info(@PathVariable("id") Long id){
 		OrderItemEntity orderItem = orderItemService.getById(id);
 
         return R.ok().put("orderItem", orderItem);
@@ -55,7 +50,7 @@ public class OrderItemController {
      * 保存
      */
     @RequestMapping("/save")
-        public R save(@RequestBody OrderItemEntity orderItem){
+    public R save(@RequestBody OrderItemEntity orderItem){
 		orderItemService.save(orderItem);
 
         return R.ok();
@@ -65,7 +60,7 @@ public class OrderItemController {
      * 修改
      */
     @RequestMapping("/update")
-        public R update(@RequestBody OrderItemEntity orderItem){
+    public R update(@RequestBody OrderItemEntity orderItem){
 		orderItemService.updateById(orderItem);
 
         return R.ok();
@@ -75,7 +70,7 @@ public class OrderItemController {
      * 删除
      */
     @RequestMapping("/delete")
-        public R delete(@RequestBody Long[] ids){
+    public R delete(@RequestBody Long[] ids){
 		orderItemService.removeByIds(Arrays.asList(ids));
 
         return R.ok();

@@ -1,6 +1,6 @@
-package io.niceseason.gulimall.order.feign;
+package com.codeofli.gulimall.order.feign;
 
-import io.niceseason.gulimall.order.vo.OrderItemVo;
+import com.codeofli.gulimall.order.vo.OrderItemVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +12,6 @@ import java.util.List;
 public interface CartFeignService {
 
     @ResponseBody
-    @RequestMapping("/getCheckedItems")
-    List<OrderItemVo> getCheckedItems();
+    @RequestMapping("/getCurrentUserCheckedItems")
+    List<OrderItemVo> getCurrentUserCheckedItems();
 }

@@ -17,6 +17,14 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
 
+  rabbitmq:
+    host: 192.168.242.5
+    username: itcast
+    password: 123321
+    listener:
+      simple:
+        acknowledge-mode: manual
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:

@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.order.config;
+package com.codeofli.gulimall.order.config;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

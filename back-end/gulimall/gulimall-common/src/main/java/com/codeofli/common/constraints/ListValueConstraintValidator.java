@@ -1,4 +1,4 @@
-package io.niceseason.common.constraints;
+package com.codeofli.common.constraints;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

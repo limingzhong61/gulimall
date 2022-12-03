@@ -11,6 +11,7 @@
 
     <modules>
         <module>gulimall-coupon</module>
+        <module>gulimall-gateway</module>
         <module>gulimall-member</module>
         <module>gulimall-order</module>
         <module>gulimall-product</module>
@@ -20,6 +21,8 @@
         <module>gulimall-common</module>
         <module>gulimall-third-party</module>
         <module>gulimall-search</module>
+        <module>gulimall-auth-server</module>
+        <module>gulimall-order</module>
     </modules>
 
 </project>

@@ -4,6 +4,7 @@ import com.codeofli.common.utils.PageUtils;
 import com.codeofli.common.utils.R;
 import com.codeofli.gulimall.ware.entity.WareInfoEntity;
 import com.codeofli.gulimall.ware.service.WareInfoService;
+import com.codeofli.gulimall.ware.vo.FareVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,11 @@ import java.util.Map;
 public class WareInfoController {
     @Autowired
     private WareInfoService wareInfoService;
+
+    @RequestMapping("/fare/{addrId}")
+    public FareVo getFare(@PathVariable("addrId") Long addrId) {
+        return wareInfoService.getFare(addrId);
+    }
 
     /**
      * 列表

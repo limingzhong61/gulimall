@@ -1,4 +1,4 @@
-package io.niceseason.gulimall.order.vo;
+package com.codeofli.gulimall.order.vo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ public class OrderConfirmVo {
     /** 所有选中的购物项 **/
     private List<OrderItemVo> items;
 
-    /** 发票记录 **/
+    /** 发票记录 ......**/
     @Getter @Setter
     /** 优惠券（会员积分） **/
     private Integer integration;

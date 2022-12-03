@@ -10,10 +10,10 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableFeignClients
-public class GullmallAuthServerApplication {
+public class GulimallAuthServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GullmallAuthServerApplication.class, args);
+		SpringApplication.run(GulimallAuthServerApplication.class, args);
 	}
 
 }

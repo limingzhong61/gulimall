@@ -1,10 +1,13 @@
 package com.codeofli.gulimall.ware.controller;
 
+import com.codeofli.common.exception.BizCodeEnum;
+import com.codeofli.common.exception.NoStockException;
 import com.codeofli.common.to.SkuHasStockVo;
 import com.codeofli.common.utils.PageUtils;
 import com.codeofli.common.utils.R;
 import com.codeofli.gulimall.ware.entity.WareSkuEntity;
 import com.codeofli.gulimall.ware.service.WareSkuService;
+import com.codeofli.gulimall.ware.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +29,21 @@ import java.util.Map;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    /**
+     * 下订单时锁库存
+     * @param lockVo
+     * @return
+     */
+    @RequestMapping("/lock/order")
+    public R orderLockStock(@RequestBody WareSkuLockVo lockVo) {
+        try {
+            Boolean lock = wareSkuService.orderLockStock(lockVo);
+            return R.ok();
+        } catch (NoStockException e) {
+            return R.error(BizCodeEnum.NO_STOCK_EXCEPTION.getCode(), BizCodeEnum.NO_STOCK_EXCEPTION.getMsg());
+        }
+    }
 
     @RequestMapping("/getSkuHasStocks")
     public List<SkuHasStockVo> getSkuHasStocks(@RequestBody List<Long> ids) {

@@ -1,6 +1,5 @@
-package io.niceseason.gulimall.order.vo;
+package com.codeofli.gulimall.order.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.math.BigDecimal;
