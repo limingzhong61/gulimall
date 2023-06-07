@@ -25,7 +25,7 @@ import com.codeofli.gulimall.order.feign.CartFeignService;
 import com.codeofli.gulimall.order.feign.MemberFeignService;
 import com.codeofli.gulimall.order.feign.ProductFeignService;
 import com.codeofli.gulimall.order.feign.WareFeignService;
-import com.codeofli.gulimall.order.interceptor.LoginInterceptor;
+import com.codeofli.gulimall.order.interceptor.LoginUserInterceptor;
 import com.codeofli.gulimall.order.service.OrderItemService;
 import com.codeofli.gulimall.order.service.OrderService;
 import com.codeofli.gulimall.order.service.PaymentInfoService;
@@ -97,7 +97,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Override
     public OrderConfirmVo confirmOrder() {
-        MemberResponseVo memberResponseVo = LoginInterceptor.loginUser.get();
+        MemberResponseVo memberResponseVo = LoginUserInterceptor.loginUser.get();
         OrderConfirmVo confirmVo = new OrderConfirmVo();
 
         //System.out.println("主线程。。。。。"+ Thread.currentThread().getId());
@@ -147,7 +147,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         SubmitOrderResponseVo responseVo = new SubmitOrderResponseVo();
         responseVo.setCode(0);
         //1. 验证防重令牌
-        MemberResponseVo memberResponseVo = LoginInterceptor.loginUser.get();
+        MemberResponseVo memberResponseVo = LoginUserInterceptor.loginUser.get();
         String script= "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
         Long execute = redisTemplate.execute(new DefaultRedisScript<>(script,Long.class),
                 Arrays.asList(OrderConstant.USER_ORDER_TOKEN_PREFIX + memberResponseVo.getId()), submitVo.getOrderToken());
@@ -236,7 +236,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Override
     public PageUtils getMemberOrderPage(Map<String, Object> params) {
-        MemberResponseVo memberResponseVo = LoginInterceptor.loginUser.get();
+        MemberResponseVo memberResponseVo = LoginUserInterceptor.loginUser.get();
         QueryWrapper<OrderEntity> queryWrapper = new QueryWrapper<OrderEntity>().eq("member_id", memberResponseVo.getId()).orderByDesc("create_time");
         IPage<OrderEntity> page = this.page(
                 new Query<OrderEntity>().getPage(params),queryWrapper
@@ -288,7 +288,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Transactional
     @Override
     public void createSeckillOrder(SeckillOrderTo orderTo) {
-        MemberResponseVo memberResponseVo = LoginInterceptor.loginUser.get();
+        MemberResponseVo memberResponseVo = LoginUserInterceptor.loginUser.get();
         //1. 创建订单
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setOrderSn(orderTo.getOrderSn());
@@ -458,4 +458,34 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         return orderEntity;
     }
 
+
+    /**
+     * 查询当前用户所有订单数据
+     * @param params
+     * @return
+     */
+    @Override
+    public PageUtils queryPageWithItem(Map<String, Object> params) {
+
+        MemberResponseVo memberResponseVo = LoginUserInterceptor.loginUser.get();
+
+        IPage<OrderEntity> page = this.page(
+                new Query<OrderEntity>().getPage(params),
+                new QueryWrapper<OrderEntity>()
+                        .eq("member_id",memberResponseVo.getId()).orderByDesc("create_time")
+        );
+
+        //遍历所有订单集合
+        List<OrderEntity> orderEntityList = page.getRecords().stream().map(order -> {
+            //根据订单号查询订单项里的数据
+            List<OrderItemEntity> orderItemEntities = orderItemService.list(new QueryWrapper<OrderItemEntity>()
+                    .eq("order_sn", order.getOrderSn()));
+            order.setOrderItemEntityList(orderItemEntities);
+            return order;
+        }).collect(Collectors.toList());
+
+        page.setRecords(orderEntityList);
+
+        return new PageUtils(page);
+    }
 }

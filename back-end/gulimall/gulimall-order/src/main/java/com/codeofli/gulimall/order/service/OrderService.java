@@ -33,10 +33,22 @@ public interface OrderService extends IService<OrderEntity> {
 
     PageUtils getMemberOrderPage(Map<String, Object> params);
 
+    /**
+     * 获取当前订单的支付信息
+     * @param orderSn
+     * @return
+     */
     PayVo getOrderPay(String orderSn);
 
     void handlerPayResult(PayAsyncVo payAsyncVo);
 
     void createSeckillOrder(SeckillOrderTo orderTo);
+
+    /**
+     * 查询当前用户所有订单数据
+     * @param params
+     * @return
+     */
+    PageUtils queryPageWithItem(Map<String, Object> params);
 }
 

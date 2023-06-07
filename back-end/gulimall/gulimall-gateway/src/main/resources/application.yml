@@ -67,6 +67,11 @@ spring:
           uri: lb://gulimall-order
           predicates:
             - Host=order.gulimall.com
+        #将主机地址为member.gulimall.com转发至gulimall-member
+        - id: gulimall_member_route
+          uri: lb://gulimall-member
+          predicates:
+            - Host=member.gulimall.com
 
         #将主机地址为**.gulimall.com转发至gulimall-product
         - id: gulimall_host

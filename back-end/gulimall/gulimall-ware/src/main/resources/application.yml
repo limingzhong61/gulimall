@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://192.168.242.5:3306/gulimall_wms?useSSL=false
+    url: jdbc:mysql://192.168.142.5:3306/gulimall_wms?useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
   cloud:
     nacos:
@@ -18,7 +18,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
 
   rabbitmq:
-    host: 192.168.242.5
+    host: 192.168.142.5
     username: itcast
     password: 123321
     listener:

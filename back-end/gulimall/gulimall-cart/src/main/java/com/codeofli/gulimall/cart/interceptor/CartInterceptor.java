@@ -18,7 +18,7 @@ import java.util.UUID;
  */
 public class CartInterceptor implements HandlerInterceptor {
 
-    public static ThreadLocal<UserInfoTo> threadLocal=new ThreadLocal<>();
+    public static ThreadLocal<UserInfoTo> toThreadLocal =new ThreadLocal<>();
 
     /**
      * 目标方法执行之前
@@ -55,7 +55,7 @@ public class CartInterceptor implements HandlerInterceptor {
             userInfoTo.setUserKey(uuid);
         }
         //目标方法执行之前
-        threadLocal.set(userInfoTo);
+        toThreadLocal.set(userInfoTo);
         return true;
     }
 
@@ -71,7 +71,7 @@ public class CartInterceptor implements HandlerInterceptor {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        UserInfoTo userInfoTo = threadLocal.get();
+        UserInfoTo userInfoTo = toThreadLocal.get();
         //如果浏览器中没有user-key，我们为其生成
         if (!userInfoTo.getTempUser()) {
             Cookie cookie = new Cookie(CartConstant.TEMP_USER_COOKIE_NAME, userInfoTo.getUserKey());

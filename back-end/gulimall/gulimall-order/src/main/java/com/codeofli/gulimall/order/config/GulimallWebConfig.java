@@ -1,6 +1,6 @@
 package com.codeofli.gulimall.order.config;
 
-import com.codeofli.gulimall.order.interceptor.LoginInterceptor;
+import com.codeofli.gulimall.order.interceptor.LoginUserInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -9,6 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class GulimallWebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new LoginUserInterceptor()).addPathPatterns("/**");
     }
 }

@@ -24,6 +24,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
+import static com.codeofli.common.constant.CartConstant.CART_PREFIX;
+
 @Service("CartService")
 public class CartServiceImpl implements CartService {
     @Autowired
@@ -97,7 +99,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public CartVo getCart() {
         CartVo cartVo = new CartVo();
-        UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
+        UserInfoTo userInfoTo = CartInterceptor.toThreadLocal.get();
         //1 用户未登录，直接通过user-key获取临时购物车
         List<CartItemVo> tempCart = getCartByKey(userInfoTo.getUserKey());
         if (StringUtils.isEmpty(userInfoTo.getUserId())) {
@@ -112,7 +114,7 @@ public class CartServiceImpl implements CartService {
             }
             //2.2 查询user-key对应的临时购物车，并和用户购物车合并
             if (tempCart!=null&&tempCart.size()>0){
-                BoundHashOperations<String, Object, Object> ops = redisTemplate.boundHashOps(CartConstant.CART_PREFIX + userInfoTo.getUserId());
+                BoundHashOperations<String, Object, Object> ops = redisTemplate.boundHashOps(CART_PREFIX + userInfoTo.getUserId());
                 for (CartItemVo cartItemVo : tempCart) {
                     userCart.add(cartItemVo);
                     //2.3 在redis中更新数据
@@ -121,7 +123,7 @@ public class CartServiceImpl implements CartService {
             }
             cartVo.setItems(userCart);
             //2.4 删除临时购物车数据
-            redisTemplate.delete(CartConstant.CART_PREFIX + userInfoTo.getUserKey());
+            redisTemplate.delete(CART_PREFIX + userInfoTo.getUserKey());
         }
 
         return cartVo;
@@ -153,7 +155,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItemVo> getCurrentUserCheckedItems() {
-        UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
+        UserInfoTo userInfoTo = CartInterceptor.toThreadLocal.get();
         if(userInfoTo.getUserId() == null){
             return null;
         }else{
@@ -170,7 +172,7 @@ public class CartServiceImpl implements CartService {
 
 
     private List<CartItemVo> getCartByKey(String userKey) {
-        BoundHashOperations<String, Object, Object> ops = redisTemplate.boundHashOps(CartConstant.CART_PREFIX+userKey);
+        BoundHashOperations<String, Object, Object> ops = redisTemplate.boundHashOps(CART_PREFIX+userKey);
 
         List<Object> values = ops.values();
         if (values != null && values.size() > 0) {
@@ -189,13 +191,53 @@ public class CartServiceImpl implements CartService {
      */
     private BoundHashOperations<String, Object, Object> getCartItemOps() {
         //1判断是否已经登录
-        UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
+        UserInfoTo userInfoTo = CartInterceptor.toThreadLocal.get();
         //1.1 登录使用userId操作redis
         if (!StringUtils.isEmpty(userInfoTo.getUserId())) {
-            return redisTemplate.boundHashOps(CartConstant.CART_PREFIX + userInfoTo.getUserId());
+            return redisTemplate.boundHashOps(CART_PREFIX + userInfoTo.getUserId());
         } else {
             //1.2 未登录使用user-key操作redis
-            return redisTemplate.boundHashOps(CartConstant.CART_PREFIX + userInfoTo.getUserKey());
+            return redisTemplate.boundHashOps(CART_PREFIX + userInfoTo.getUserKey());
         }
+    }
+
+
+    @Override
+    public void checkItem(Long skuId, Integer check) {
+
+        //查询购物车里面的商品
+        CartItemVo cartItem = getCartItem(skuId);
+        //修改商品状态
+        cartItem.setCheck(check == 1?true:false);
+
+        //序列化存入redis中
+        String redisValue = JSON.toJSONString(cartItem);
+
+        BoundHashOperations<String, Object, Object> cartOps = getCartOps();
+        cartOps.put(skuId.toString(),redisValue);
+
+    }
+
+
+    /**
+     * 获取到我们要操作的购物车
+     * @return
+     */
+    private BoundHashOperations<String, Object, Object> getCartOps() {
+        //先得到当前用户信息
+        UserInfoTo userInfoTo = CartInterceptor.toThreadLocal.get();
+
+        String cartKey = "";
+        if (userInfoTo.getUserId() != null) {
+            //gulimall:cart:1
+            cartKey = CART_PREFIX + userInfoTo.getUserId();
+        } else {
+            cartKey = CART_PREFIX + userInfoTo.getUserKey();
+        }
+
+        //绑定指定的key操作Redis
+        BoundHashOperations<String, Object, Object> operations = redisTemplate.boundHashOps(cartKey);
+
+        return operations;
     }
 }

@@ -2,12 +2,12 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://192.168.242.5:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.142.5:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
   thymeleaf:
     cache: false
   redis:
-    host: 192.168.242.5
+    host: 192.168.142.5
   session:
     store-type: redis
   cloud:
@@ -20,7 +20,7 @@ spring:
         dashboard: localhost:8080
 
   rabbitmq:
-    host: 192.168.242.5
+    host: 192.168.142.5
     username: itcast
     password: 123321
     listener:

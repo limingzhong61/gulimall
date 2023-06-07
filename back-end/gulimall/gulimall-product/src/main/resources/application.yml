@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://192.168.242.5:3306/gulimall_pms?useSSL=false
+    url: jdbc:mysql://192.168.142.5:3306/gulimall_pms?useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
   cloud:
     nacos:
@@ -18,7 +18,7 @@ spring:
     suffix: .html
     prefix: classpath:/templates/
   redis:
-    host: 192.168.242.5
+    host: 192.168.142.5
     port: 6379
   cache:
     type: redis

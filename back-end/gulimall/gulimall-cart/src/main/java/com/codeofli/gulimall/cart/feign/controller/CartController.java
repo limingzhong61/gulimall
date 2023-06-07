@@ -8,6 +8,7 @@ import com.codeofli.gulimall.cart.vo.CartVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,12 +35,13 @@ public class CartController {
     @RequestMapping("/cart.html")
     public String getCartList(Model model) {
         //1、快速得到用户信息, id, user-key
-        UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
+        UserInfoTo userInfoTo = CartInterceptor.toThreadLocal.get();
 
         CartVo cartVo=cartService.getCart();
         model.addAttribute("cart", cartVo);
         return "cartList";
     }
+
 
     @RequestMapping("/success.html")
     public String success() {
@@ -91,4 +93,20 @@ public class CartController {
         return cartService.getCurrentUserCheckedItems();
     }
 
+
+    /**
+     * 商品是否选中
+     * @param skuId
+     * @param checked
+     * @return
+     */
+    @GetMapping(value = "/checkItem")
+    public String checkItem(@RequestParam(value = "skuId") Long skuId,
+                            @RequestParam(value = "checked") Integer checked) {
+
+        cartService.checkItem(skuId,checked);
+
+        return "redirect:http://cart.gulimall.com/cart.html";
+
+    }
 }
