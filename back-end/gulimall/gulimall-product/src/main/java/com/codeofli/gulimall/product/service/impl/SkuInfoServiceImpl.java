@@ -163,7 +163,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
         //6、秒杀商品的优惠信息
         CompletableFuture<Void> seckFuture = CompletableFuture.runAsync(() -> {
-            R r = seckillFeignService.getSeckillSkuInfo(skuId);
+            R r = seckillFeignService.getSkuSeckilInfo(skuId);
             if (r.getCode() == 0) {
                 SeckillSkuVo seckillSkuVo = r.getData(new TypeReference<SeckillSkuVo>() {
                 });

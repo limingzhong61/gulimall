@@ -296,6 +296,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         if (memberResponseVo!=null){
             orderEntity.setMemberUsername(memberResponseVo.getUsername());
         }
+
         orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
         orderEntity.setCreateTime(new Date());
         orderEntity.setPayAmount(orderTo.getSeckillPrice().multiply(new BigDecimal(orderTo.getNum())));

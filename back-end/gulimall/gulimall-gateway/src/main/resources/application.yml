@@ -38,6 +38,13 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
+        - id: coupon_route
+          uri: lb://gulimall-coupon
+          predicates:
+            - Path=/api/coupon/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
         - id: admin_route
           uri: lb://renren-fast   #路由给renren-fast，lb代表负载均衡
           predicates: #断言， 什么情况下路由给它
@@ -73,14 +80,38 @@ spring:
           predicates:
             - Host=member.gulimall.com
 
+        - id: gulimall_seckill_route
+          uri: lb://gulimall-seckill
+          predicates:
+            - Host=seckill.gulimall.com
+
         #将主机地址为**.gulimall.com转发至gulimall-product
         - id: gulimall_host
           uri: lb://gulimall-product
           predicates:
             - Host=gulimall.com,item.gulimall.com
 #            - Host=**.gulimall.com,gulimall.com
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 
-
+    sentinel:
+      transport:
+        #配置sentinel dashboard地址
+        dashboard: localhost:8080
+        #默认8719端口，假如被占用会自动从8719开始依次+1扫描，直至找到未被占用的端口
+        port: 8719
+  #链路追踪
+  zipkin:
+    # zipkin 服务器的地址
+    base-url: http://192.168.142.5:9411/
+    # 关闭服务发现，否则Spring Cloud 会把zipkin 的url 当做服务名称
+    discoveryClientEnabled: false
+    sender:
+      type: web # 设置使用http 的方式传输数据
+  sleuth:
+    sampler:
+      probability: 1 # 设置抽样采集率为100%，默认为0.1，即10%
 
 #        - id: product_route
 #          uri: lb://gulimall-product
@@ -117,3 +148,10 @@ spring:
   ## 前端项目，/api
 ## http://localhost:88/api/captcha.jpg   http://localhost:8080/renren-fast/captcha.jpg
 ## http://localhost:88/api/product/category/list/tree http://localhost:10000/product/category/list/tree
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

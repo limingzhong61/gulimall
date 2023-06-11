@@ -170,7 +170,7 @@ public class IndexController {
     @ResponseBody
     @GetMapping("/getSeckillSkuInfo/{skuId}")
     public R getSeckillSkuInfo(@PathVariable("skuId") Long skuId) {
-        return seckillFeignService.getSeckillSkuInfo(skuId);
+        return seckillFeignService.getSkuSeckilInfo(skuId);
     }
 
 }

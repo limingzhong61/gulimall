@@ -14,7 +14,7 @@
     <description>每一个微服务公共的依赖，bean，工具类等</description>
     <properties>
         <java.version>1.8</java.version>
-            <!--     统一设置spring-cloud和spring-cloud-alibaba版本   -->
+        <!--     统一设置spring-cloud和spring-cloud-alibaba版本   -->
         <spring-cloud.version>2021.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
         <fastjson.version>2.0.14</fastjson.version>
@@ -28,6 +28,23 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
         </dependency>
+        <!-- sentinel熔断降级限流-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>2.1.8.RELEASE</version>
+        </dependency>
+            <!--   zipkin 链路可视化追踪   其中已经引入了sleuth -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+            <version>2.2.8.RELEASE</version>
+        </dependency>
+
         <!--lombok 简化实体类，用@Data代替getset方法-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -64,7 +81,7 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-<!--            <version>${spring-cloud-alibaba.version}</version>-->
+            <!--            <version>${spring-cloud-alibaba.version}</version>-->
             <!--不使用Ribbon 进行客户端负载均衡-->
             <exclusions>
                 <exclusion>
@@ -82,7 +99,7 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-<!--            <version>${spring-cloud-alibaba.version}</version>-->
+            <!--            <version>${spring-cloud-alibaba.version}</version>-->
         </dependency>
         <!--解决在nacos中修改了配置但是不生效-->
         <dependency>
